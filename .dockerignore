@@ -1,5 +1,6 @@
 .git
 .gitignore
-target
+.gradle
+build
 Dockerfile
 README.md
