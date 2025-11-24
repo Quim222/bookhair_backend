@@ -16,7 +16,7 @@ public class BookingCreateDto {
     private String userId;
 
     @NotBlank(message = "Employer ID é obrigatório")
-    private String employerId;
+    private String employeeId;
 
     @NotBlank(message = "Service ID é obrigatório")
     private String serviceId;

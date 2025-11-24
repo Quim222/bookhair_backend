@@ -37,12 +37,12 @@ public class BookingService {
 
         System.out.println("Verificando data/hora da reserva...");
         System.out.println(booking.getStartTime());
-        System.out.println(booking.getEmployerId());
+        System.out.println(booking.getEmployeeId());
         System.out.println(booking.getServiceId());
         System.out.println(booking.getUserId());
         String bookingId = UUID.randomUUID().toString();
         User user = userService.getUserById(booking.getUserId());
-        User employee = userService.getUserById(booking.getEmployerId());
+        User employee = userService.getUserById(booking.getEmployeeId());
         Services service = servicesService.getServiceById(booking.getServiceId());
         if (user == null || employee == null || service == null) {
             throw new IllegalArgumentException("User, Employee ou Service não encontrado");
@@ -165,8 +165,8 @@ public class BookingService {
         if (!Objects.equals(booking.getUserId(), old.getUser().getUserId()))
             old.setUser(userService.getUserById(booking.getUserId()));
 
-        if (!Objects.equals(booking.getEmployerId(), old.getEmployee().getUserId()))
-            old.setEmployee(userService.getUserById(booking.getEmployerId()));
+        if (!Objects.equals(booking.getEmployeeId(), old.getEmployee().getUserId()))
+            old.setEmployee(userService.getUserById(booking.getEmployeeId()));
 
         if (!Objects.equals(booking.getServiceId(), old.getService().getId()))
             old.setService(servicesService.getServiceById(booking.getServiceId()));
