@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.bookhair'
@@ -37,6 +38,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.testcontainers:junit-jupiter:1.20.3'
     testImplementation 'com.h2database:h2'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -44,4 +46,21 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging {
+		events "PASSED","FAILED","SKIPPED"
+		exceptionFormat "FULL"
+	}
+}
+
+jacoco { toolVersion = "0.8.11" }
+tasks.register('jacocoReport', JacocoReport) {
+  dependsOn test
+  reports {
+    html.required = true
+    xml.required = true
+    csv.required = false
+  }
+  sourceDirectories.setFrom files(sourceSets.main.allSource.srcDirs)
+  classDirectories.setFrom files(sourceSets.main.output)
+  executionData.setFrom fileTree(buildDir).include("/jacoco/test.exec")
 }
